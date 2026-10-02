@@ -1,6 +1,6 @@
 import pytest
 
-from executive_bi.core import ExecutiveRecord, analyse, sample, validate
+from executive_bi.core import ExecutiveRecord, action_register, analyse, sample, validate
 
 
 def test_high_priority_unit_is_exposed() -> None:
@@ -34,3 +34,11 @@ def test_impossible_margin_fails() -> None:
                 )
             ]
         )
+
+
+def test_high_priority_signal_has_action_owner_and_driver() -> None:
+    actions = action_register(analyse(sample()))
+    south = next(row for row in actions if row["business_unit"] == "South")
+    assert south["owner"] == "business_unit_lead"
+    assert "revenue_variance" in south["drivers"]
+    assert south["follow_up_metric"]
