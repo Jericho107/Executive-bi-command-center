@@ -104,6 +104,35 @@ def analyse(records: Iterable[ExecutiveRecord]) -> list[ExecutiveSignal]:
     return output
 
 
+def action_register(signals: Iterable[ExecutiveSignal]) -> list[dict[str, object]]:
+    actions: list[dict[str, object]] = []
+    for row in signals:
+        if row.priority == "monitor":
+            continue
+        drivers: list[str] = []
+        if row.revenue_variance_pct < -0.05:
+            drivers.append("revenue_variance")
+        if row.gross_margin_pct < 0.30:
+            drivers.append("gross_margin")
+        if row.cash_conversion_pct < 0.85:
+            drivers.append("cash_conversion")
+        if row.retention_pct < 0.90:
+            drivers.append("retention")
+        if row.controllable_contribution < 0:
+            drivers.append("controllable_contribution")
+        actions.append(
+            {
+                "period": row.period,
+                "business_unit": row.business_unit,
+                "priority": row.priority,
+                "drivers": drivers,
+                "owner": "business_unit_lead",
+                "follow_up_metric": drivers[0] if drivers else "priority",
+            }
+        )
+    return actions
+
+
 def portfolio_summary(signals: Iterable[ExecutiveSignal]) -> dict[str, object]:
     rows = list(signals)
     return {
@@ -139,5 +168,6 @@ def serialise_sample() -> dict[str, object]:
     signals = analyse(sample())
     return {
         "signals": [asdict(item) for item in signals],
+        "actions": action_register(signals),
         "summary": portfolio_summary(signals),
     }
