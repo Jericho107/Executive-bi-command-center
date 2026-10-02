@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import sys
 
-from .core import ExecutiveRecord, serialise_sample, sample, validate
+from .core import ExecutiveRecord, sample, serialise_sample, validate
 
 
 def smoke() -> int:
