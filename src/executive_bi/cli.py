@@ -12,19 +12,37 @@ def smoke() -> int:
 
 
 def reverse_test() -> int:
-    cases = []
+    cases: list[dict[str, str]] = []
+
     try:
-        rows = sample(); validate(rows + [rows[0]])
+        rows = sample()
+        validate(rows + [rows[0]])
     except ValueError as exc:
-        cases.append({"case": "duplicate-grain", "status": "PASS", "error": str(exc)})
+        cases.append(
+            {"case": "duplicate-grain", "status": "PASS", "error": str(exc)}
+        )
     else:
-        cases.append({"case": "duplicate-grain", "status": "FAIL", "error": "corruption accepted"})
+        cases.append(
+            {"case": "duplicate-grain", "status": "FAIL", "error": "corruption accepted"}
+        )
+
     try:
-        validate([ExecutiveRecord('2026-09','X',100,100,101,20,80,100,90,100)])
+        validate(
+            [
+                ExecutiveRecord(
+                    "2026-09", "X", 100, 100, 101, 20, 80, 100, 90, 100
+                )
+            ]
+        )
     except ValueError as exc:
-        cases.append({"case": "impossible-margin", "status": "PASS", "error": str(exc)})
+        cases.append(
+            {"case": "impossible-margin", "status": "PASS", "error": str(exc)}
+        )
     else:
-        cases.append({"case": "impossible-margin", "status": "FAIL", "error": "corruption accepted"})
+        cases.append(
+            {"case": "impossible-margin", "status": "FAIL", "error": "corruption accepted"}
+        )
+
     print(json.dumps(cases, indent=2, sort_keys=True))
     return 0 if all(case["status"] == "PASS" for case in cases) else 1
 
@@ -35,7 +53,10 @@ def main() -> int:
         return smoke()
     if command == "reverse-test":
         return reverse_test()
-    print("usage: python -m PACKAGE.cli [smoke|reverse-test]", file=sys.stderr)
+    print(
+        "usage: python -m executive_bi.cli [smoke|reverse-test]",
+        file=sys.stderr,
+    )
     return 2
 
 
