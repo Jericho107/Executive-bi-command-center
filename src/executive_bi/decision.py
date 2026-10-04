@@ -100,11 +100,19 @@ th:first-child, td:first-child {{ text-align: left; }}
 <h1>Executive BI Command Center</h1>
 <p>Cross-functional decision surface for revenue, margin, cash conversion and retention.</p>
 <h2>Current operating signals</h2>
-<table><thead><tr><th>Unit</th><th>Revenue variance</th><th>Gross margin</th><th>Cash conversion</th><th>Retention</th><th>Priority</th></tr></thead><tbody>{signal_rows}</tbody></table>
+<table><thead><tr>
+<th>Unit</th><th>Revenue variance</th><th>Gross margin</th>
+<th>Cash conversion</th><th>Retention</th><th>Priority</th>
+</tr></thead><tbody>{signal_rows}</tbody></table>
 <h2>Action register</h2>
-<table><thead><tr><th>Unit</th><th>Priority</th><th>Drivers</th><th>Owner</th><th>Follow-up metric</th></tr></thead><tbody>{action_rows}</tbody></table>
+<table><thead><tr>
+<th>Unit</th><th>Priority</th><th>Drivers</th><th>Owner</th><th>Follow-up metric</th>
+</tr></thead><tbody>{action_rows}</tbody></table>
 <h2>Downside stress test</h2>
-<table><thead><tr><th>Unit</th><th>Base priority</th><th>Stress priority</th><th>Base drivers</th><th>Stress drivers</th></tr></thead><tbody>{stress_rows}</tbody></table>
+<table><thead><tr>
+<th>Unit</th><th>Base priority</th><th>Stress priority</th>
+<th>Base drivers</th><th>Stress drivers</th>
+</tr></thead><tbody>{stress_rows}</tbody></table>
 <p><small>Synthetic management data. Thresholds require calibration before operational deployment.</small></p>
 </body></html>"""
 
