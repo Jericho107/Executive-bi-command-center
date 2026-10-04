@@ -1,13 +1,17 @@
-# Proof Matrix
+# Validation Matrix
 
-| Claim | Executable evidence | Failure evidence | Status |
+| Claim | Executable evidence | Failure path | Status |
 |---|---|---|---|
-| Inputs respect contract | unit tests + smoke run | corrupt input | implemented |
-| Decision metric is deterministic | core functions | boundary tests | implemented |
-| Material defect is detected | validator | reverse test | implemented |
-| Repository works from clean checkout | CI install + smoke | CI fails closed | implemented |
-| Real-world business impact | none in synthetic case | N/A | **not claimed** |
+| Unit/period grain is unique | `core.validate` | duplicate period/business unit | implemented |
+| Financial relationships remain plausible | `core.validate` | impossible margin/cash/cost state | implemented |
+| KPI signals are deterministic | `core.analyse` | boundary tests | implemented |
+| Priority is tied to adverse business drivers | adverse-driver count + priority rules | controlled stress scenario | implemented |
+| Every actionable signal has an owner and follow-up metric | `action_register` | action-register tests | implemented |
+| Decision layer responds to downside conditions | `decision.stress_records` + comparison | stress responsiveness reverse test | implemented |
+| Executive report is generated from the governed model | `decision.executive_report_html` | report-content tests | implemented |
+| CI validates clean and corrupted states | GitHub Actions | duplicate/impossible state + stress reverse tests | implemented |
+| Real management impact | no production evidence | not applicable | not claimed |
 
-## Officialisation rule
+## Review principle
 
-Documentation alone earns no proof credit. A material claim must map to executable evidence.
+The project does not treat a KPI as an action. A signal must be connected to a driver, priority, owner and follow-up metric before it reaches the action register.
