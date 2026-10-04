@@ -2,7 +2,9 @@
 
 # Executive BI Command Center
 
-### Cross-functional executive decision system for revenue, margin, cash conversion and retention.
+### Revenue · Margin · Cash Conversion · Retention · Action Priority
+
+**Python · Decision Rules · Scenario Analysis · CI**
 
 **Pretoria BI — Data · Intelligence · Performance**
 
@@ -12,27 +14,53 @@
 
 ## Management question
 
-> Revenue can be on plan while margin, cash conversion or retention deteriorate. **Which unit requires management attention first, and why?**
+> **Which business unit requires management attention first, why, who owns the response and what happens under a downside scenario?**
 
-**All data and entities are synthetic. No client result or realised ROI is claimed.**
+This repository turns cross-functional management metrics into an explicit action register rather than stopping at KPI display.
 
----
+**All entities and values are synthetic. No client result or realised ROI is claimed.**
 
-## What this repository proves
-
-- Revenue vs budget variance
-- Gross margin and controllable contribution
-- Cash conversion
-- Retention
-- Driver-count based action priority
-
-The objective is not to inflate a portfolio with screenshots. The repository has an executable happy path and deliberately corrupted states that must be rejected.
-
-## Evidence chain
+## Decision model
 
 ```text
-SIGNAL → CONTRACT → VALIDATION → ANALYSIS → DECISION RULE → ACTION OWNER → FOLLOW-UP
+ACTUALS + BUDGET + CASH + CUSTOMER BASE
+                 ↓
+           DATA CONTRACTS
+                 ↓
+       GOVERNED KPI CALCULATION
+                 ↓
+       ADVERSE DRIVER DETECTION
+                 ↓
+         PRIORITY CLASSIFICATION
+                 ↓
+OWNER + FOLLOW-UP METRIC + STRESS TEST
 ```
+
+Implemented signals:
+
+- revenue vs budget variance;
+- gross margin;
+- controllable contribution;
+- cash conversion;
+- customer retention;
+- adverse-driver count;
+- unit-level action priority.
+
+## Executive decision surface
+
+Generate the management report:
+
+```bash
+python -m executive_bi.cli report
+```
+
+Output: `output/executive_command_center.html`.
+
+The report contains the current unit ranking, action register and a downside scenario that shocks revenue, cash collection and retention.
+
+## Stress-test discipline
+
+A model that never changes when operating conditions deteriorate is not useful for management. The repository therefore verifies that a controlled downside scenario increases or preserves adverse-driver pressure and changes priority where appropriate.
 
 ## Run locally
 
@@ -41,28 +69,16 @@ python -m pip install -e ".[dev]"
 ruff check .
 pytest -q
 python -m executive_bi.cli smoke
+python -m executive_bi.cli report
 python -m executive_bi.cli reverse-test
 ```
 
-## Repository map
+## Review path
 
-```text
-executive-bi-command-center/
-├── .github/workflows/ci.yml
-├── config/
-├── docs/
-├── sql/
-├── src/executive_bi/
-├── tests/
-├── Dockerfile
-├── Makefile
-├── pyproject.toml
-└── README.md
-```
+**For a recruiter:** inspect `core.py`, `decision.py`, tests and CI.  
+**For a manager:** open the generated HTML report and read the action register.
 
-## Proof boundary
-
-Implemented evidence is separated from future production claims. See `docs/proof_matrix.md` and `docs/limitations.md`. Thresholds in this synthetic case are examples to demonstrate governance and must be calibrated before real deployment.
+Thresholds are demonstrative and require calibration against the economics and risk appetite of a real organisation.
 
 ---
 

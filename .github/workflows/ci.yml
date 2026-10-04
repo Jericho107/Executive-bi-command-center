@@ -32,5 +32,9 @@ jobs:
         run: pytest -q
       - name: Smoke evidence
         run: python -m executive_bi.cli smoke
+      - name: Generate executive decision surface
+        run: |
+          python -m executive_bi.cli report
+          test -s output/executive_command_center.html
       - name: Reverse-test evidence
         run: python -m executive_bi.cli reverse-test
